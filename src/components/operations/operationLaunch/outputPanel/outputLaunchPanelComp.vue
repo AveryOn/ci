@@ -26,17 +26,22 @@
             >
                 <ci-spinner></ci-spinner>
             </span>
+
+            <div v-if="!!props.result === false" class="w-full h-full flex align-items-center justify-content-center">
+                <h2 class="font-light">Here the results of the operation will be displayed</h2>
+            </div>
             
-            <treeLaunchPanel v-if=false :result="props.result"/>
-            <tableDataComp v-else-if="false" :result="props.result"/>
-            <codeDataComp :data="operationResultGet" v-else/>
-            
+            <!-- Форматы отображения результата операции (таблица-дерево / JSON / таблица (?)) -->
+            <div v-else class="px-2">
+                <tableDataComp v-if="selectedModeView === 'table'" :result="props.result"/>
+                <treeLaunchPanel v-else-if="selectedModeView === 'tree'" :result="props.result"/>
+                <codeDataComp v-else :result="props.result"/>
+            </div>
         </div>
     </div>
 </template>
 
 <script setup>
-import { operationResultGet } from '@/services/testdata';
 import { ref, defineProps } from 'vue';
 import treeLaunchPanel from '@/components/operations/operationLaunch/outputPanel/treeTableDataComp.vue';
 import tableDataComp from '@/components/operations/operationLaunch/outputPanel/tableDataComp.vue';
@@ -79,8 +84,10 @@ const selectedModeView = ref('code')   // table | code | tree
     bottom: 1rem;
     background-color: rgba(0,0,0, .07);
     backdrop-filter: blur(2px);
+    z-index: 100;
 }
 .payload-data-overlay {
+    position: relative;
     width: 100%;
     height: 100%;
     overflow: auto;

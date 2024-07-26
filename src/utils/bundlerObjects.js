@@ -10,13 +10,14 @@
 */
 
 
-const dataTypes = {
+export const dataTypes = {
     str: 'String',
     int: 'Number',
     obj: 'Object',
     arr: 'Array',
     bool: 'Boolean',
     none: 'None',
+    dt: 'Datetime',
 }
 
 // Определить тип данных для элемента данных
@@ -74,4 +75,3 @@ export function bundleTreeTableData(payload, parentKey = undefined) {
     }
     return result;
 }
-

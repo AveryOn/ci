@@ -8,8 +8,9 @@
 import hljs from 'highlight.js';
 import { computed, onMounted, onUpdated, ref } from 'vue';
 
+// ####################################  PROPS  ####################################
 const props = defineProps({
-    data: {
+    result: {
         type: [Object, Array],
         default: null,
         required: false,
@@ -20,9 +21,10 @@ const props = defineProps({
 const code = ref(null);
 
 // ####################################  COMPUTED  ####################################
+// Форматирование приходящих данных в JSON формат сохраняя отступы
 const computeJSON = computed(() => {
-    if(props.data) {
-        return JSON.stringify(props.data, null, 2);
+    if(props.result) {
+        return JSON.stringify(props.result, null, 2);
     } else return 'None'
 });
 

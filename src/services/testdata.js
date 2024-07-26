@@ -420,7 +420,7 @@ export const operationPostResult = {
 }
 
 export const operationResultGet = [
-    {"id":1,"data":{"label":"label-621-1","isActive":false}},
+    [{"id":1,"data":{"label":null,"isActive":false}}],
     {"id":2,"data":{"label":"label-863-2","isActive":false}},
     {"id":3,"data":{"label":"label-670-3","isActive":true}},
     {"id":4,"data":{"label":"label-233-4","isActive":true}},
