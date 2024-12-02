@@ -15,7 +15,7 @@ function start {
     )
     for i in "${commands[@]}"; do
         command="$base_cmd $i"
-        echo "[command] \"$command\" run..."
+        echo "[command] RUN => \"$command\""
         eval "$command"
     done
 }
