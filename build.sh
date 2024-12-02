@@ -7,6 +7,6 @@ commands=(
 )
 for i in "${commands[@]}"; do
     command="$base_cmd $i"
-    echo "[start] $command"
+    echo "[command] $command"
     eval "$command"
 done
