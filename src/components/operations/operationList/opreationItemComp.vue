@@ -1,17 +1,13 @@
 <template>
-  <!-- ___          ___               ____'     
-'|\¯¯¯¯\      /'¯¯¯'/|°    ____\¯¯¯¯\'   
-'|:'\      '\   /      '/:'|'   /¯¯¯¯''/'\      ;\  
- '\::'\      \/      /::/'  '/      ;'/:'|:'|      ;|°
-    \:|            '|:'/    |      ;'|::/\'|      ;'| 
-     /      /\      '\     |      ;'|/   '|      ;'| 
-   /      '/:|:'\      '\"  |      ;'|    '|      ;'| 
- /'_'__'/:::|:::\'__'_'\*|\      ;\  '/       '/| 
- |¯¯¯¯|:'/  \::|¯¯¯¯| |:'\       \/____/:'| 
- |____|/     '\|____| '\::\____\¯¯¯'|::/' 
-  ¯¯¯¯         ¯¯¯¯'   \:|¯¯¯¯|___'|/'   
-   '                          \|____|¯¯¯‘     
-  ___       ___         ¯¯¯¯'            -->
+    <!-- 
+   ____     _____     _____   ______       ____     ________    _____     ____        __      _       _____   ________    _____     __    __    
+  / __ \   (  __ \   / ___/  (   __ \     (    )   (___  ___)  (_   _)   / __ \      /  \    / )     (_   _) (___  ___)  / ___/     \ \  / /    
+ / /  \ \   ) )_) ) ( (__     ) (__) )    / /\ \       ) )       | |    / /  \ \    / /\ \  / /        | |       ) )    ( (__       () \/ ()    
+( ()  () ) (  ___/   ) __)   (    __/    ( (__) )     ( (        | |   ( ()  () )   ) ) ) ) ) )        | |      ( (      ) __)      / _  _ \    
+( ()  () )  ) )     ( (       ) \ \  _    )    (       ) )       | |   ( ()  () )  ( ( ( ( ( (         | |       ) )    ( (        / / \/ \ \   
+ \ \__/ /  ( (       \ \___  ( ( \ \_))  /  /\  \     ( (       _| |__  \ \__/ /   / /  \ \/ /        _| |__    ( (      \ \___   /_/      \_\  
+  \____/   /__\       \____\  )_) \__/  /__(  )__\    /__\     /_____(   \____/   (_/    \__/        /_____(    /__\      \____\ (/          \) 
+     -->
     <Panel class="overflow-hidden shadow-2" :toggleable="true" :collapsed="isCollapseSelf" @update:collapsed="handlerCollapsed">
         <!-- Header -->
         <template #header>
@@ -49,7 +45,8 @@
                 <div>
                     <h2 class="operation-chunck-label text-xl ml-2 ci-text">Description:</h2>
                     <div class="ml-4 my-2">
-                        <span class="ci-operation-description">{{ props.data.description }}</span>
+                        <span v-if="!!props.data.description" class="ci-operation-description">{{ props.data.description }}</span>
+                        <span v-else class="ci-operation-description"><strong>None</strong></span>
                     </div>
                 </div>
 
@@ -77,15 +74,39 @@
                     </div>
                 </div>
 
+
+
+                <!-- Path params -->
+                <div class="operation-chunck-label mt-3">
+                    <Panel class="overflow-hidden" :toggleable="true" :collapsed="true">
+                        <template #header><h2 class=" text-xl ml-2 ci-text">Path Params:</h2></template>
+                        <template #default>
+                            <DataTable
+                            v-if="props.data.pathParams?.length"
+                            class="mx-4 mt-2"
+                            :value="props.data.pathParams" 
+                            :show-gridlines="true"
+                            tableStyle="min-width: 30rem"
+                            >
+                                <Column field="key" header="Key" style="width: 25%"></Column>
+                                <Column field="type" header="Type" style="width: 25%"></Column>
+                                <Column field="default" header="By default" style="width: 25%"></Column>
+                                <Column field="required" header="Required" style="width: 25%"></Column>
+                            </DataTable>
+                            <span v-else class="ci-text text-lg ml-4">None</span>
+                        </template>
+                    </Panel>
+                </div>
+
                 <!-- Query params -->
                 <div class="operation-chunck-label mt-3">
                     <Panel class="overflow-hidden" :toggleable="true" :collapsed="true">
                         <template #header>
-                            <h2 class=" text-xl ci-text">Query Params:</h2>
+                            <h2 class=" text-xl ml-2 ci-text">Query Params:</h2>
                         </template>
                         <template #default>
                             <DataTable
-                            v-if="props.data.queryParams"
+                            v-if="props.data.queryParams?.length"
                             class="mx-4 mt-2"
                             :value="props.data.queryParams" 
                             :show-gridlines="true"
@@ -101,36 +122,13 @@
                     </Panel>
                 </div>
 
-                <!-- Path params -->
-                <div class="operation-chunck-label mt-3">
-                    <Panel class="overflow-hidden" :toggleable="true" :collapsed="true">
-                        <template #header><h2 class=" text-xl ml-2 ci-text">Path Params:</h2></template>
-                        <template #default>
-                            <DataTable
-                            v-if="props.data.pathParams"
-                            class="mx-4 mt-2"
-                            :value="props.data.pathParams" 
-                            :show-gridlines="true"
-                            tableStyle="min-width: 30rem"
-                            >
-                                <Column field="key" header="Key" style="width: 25%"></Column>
-                                <Column field="type" header="Type" style="width: 25%"></Column>
-                                <Column field="default" header="By default" style="width: 25%"></Column>
-                                <Column field="required" header="Required" style="width: 25%"></Column>
-                            </DataTable>
-                            <span v-else class="ci-text text-lg ml-4">None</span>
-                        </template>
-                    </Panel>
-                    
-                </div>
-
                 <!-- Request Body -->
                 <div class="operation-chunck-label mt-3">
                     <Panel class="overflow-hidden" :toggleable="true" :collapsed="true">
                         <template #header><h2 class="text-xl ml-2 ci-text">Request Body:</h2></template>
                         <template #default>
                             <DataTable
-                            v-if="props.data.requestBody"
+                            v-if="props.data.requestBody?.length"
                             class="mx-4 mt-2"
                             :value="props.data.requestBody" 
                             :show-gridlines="true"
@@ -185,11 +183,12 @@ import { ref, defineEmits, defineProps, onMounted, watch, computed } from 'vue';
 import { useRouter } from 'vue-router';
 import PatternService from '@/services/patternService';
 import { useOperationsStore } from '@/stores/operationsStore';
-import gsap from 'gsap';
 
+// ###############################  COMPOSABLES  ###############################
 const router = useRouter();
 const operationsStore = useOperationsStore();
 
+// ###############################  PROPS  ###############################
 const props = defineProps({
     isCollapseIds: {
         type: Array,
@@ -223,11 +222,15 @@ const props = defineProps({
     }
 });
 
-// =======================  DATA  ===========================
+// ###############################  EMITS  ###############################
+const emit = defineEmits(['update:collapsed', 'openEditForm']);
+
+
+
+// ###############################  DATA  ###############################
 const isCollapseSelf = ref(true);
 const selfId = ref(null);
 const isShowDeleteOperationForm = ref(false);
-const isCollapsedQueryBlock = ref(true);
 // Кнопки дополнительных взаимодействий с проектом
 const items = ref([
     {
@@ -240,9 +243,7 @@ const items = ref([
     {
         label: 'Edit',
         icon: 'pi pi-pencil',
-        command: () => {
-            console.log('test');
-        }
+        command: () => emit('openEditForm', props.data),
     },
     {
         label: 'Delete',
@@ -253,7 +254,7 @@ const items = ref([
     },
 ]);
 
-// =======================  METHODS  ===========================
+// ###############################  METHODS  ###############################
 function handlerCollapsed(value) {
     isCollapseSelf.value = value;
     emit('update:collapsed', { isCollapse: value, id: selfId.value });
@@ -270,12 +271,7 @@ function handlerOperationLaunch() {
     });
 }
 
-// Скрыть/Развернуть блок параметров запроса
-function expandRcollapseQueries() {
-    gsap.to('.queries-table', { duration: 0.4, height: '50px' })
-}
-
-// =======================  COMPUTED  ===========================
+// ###############################  COMPUTED  ###############################
 // вычисление даты и времени для отображения их в Created At
 const computeTemplateCreatedAt = computed(() => {
     return PatternService.formattedDateTime(props.data.createdAt, 'HH:mm  DD/MM/YYYY', '+03:00');
@@ -287,7 +283,7 @@ const computeTemplateUpdatedAt = computed(() => {
 });
 
 
-// =======================  WATCH  ===========================
+// ###############################  WATCH  ###############################
 watch(() => props.reqCollapse, (newValue) => {
     if(newValue === true) {
         if(props.isCollapseIds.includes(selfId.value)) {
@@ -297,13 +293,12 @@ watch(() => props.reqCollapse, (newValue) => {
 });
 
 
-// =======================  LIFECYCLE HOOKS  ===========================
+// ###############################  LIFECYCLE HOOKS  ###############################
 onMounted(() => {
     // Идентифицируем текущий компонент уникальным ID для скрытия его в списке таких компонентов
     selfId.value = Date.now() + '';
 });
 
-const emit = defineEmits(['update:collapsed']);
 
 </script>
 

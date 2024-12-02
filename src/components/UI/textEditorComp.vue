@@ -10,7 +10,7 @@
         />
     </div>
 </template>
-  
+
 <script setup>
 import { onMounted, ref, defineProps, defineEmits, watch } from 'vue';
 import Quill from 'quill';
