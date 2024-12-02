@@ -5,8 +5,7 @@ commit_name="commit-$full_date"
 current_branch=$(git branch --show-current)
 
 
-
-
+# Запуск последовательности команд
 function start {
     commands=(
         "status"
@@ -15,23 +14,14 @@ function start {
         "push $1 $2"
     )
     for i in "${commands[@]}"; do
-        echo "[command] \"$base_cmd $i\"..."
+        command="$base_cmd $i"
+        echo "[command] \"$command\" run..."
+        eval "$command"
     done
 }
 
+# Запуск команд для каждого origin
 for origin in $(git remote); do
     echo "=================  {$origin}  ================="
     start $origin $current_branch
 done
-
-# for i in "${commands[@]}"; do
-#     echo "$i"
-# done
-
-# 
-# for i in "${current_branch[@]}"; do
-
-#     if [[ "$i" == *"*"* ]]; then
-#         echo "$i"
-#     fi
-# done
