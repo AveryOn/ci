@@ -22,6 +22,6 @@ function start {
 
 # Запуск команд для каждого origin
 for origin in $(git remote); do
-    echo "=================  {$origin}  =================\n"
+    echo "=================  {$origin}  ================="\n
     start $origin $current_branch
 done
