@@ -41,25 +41,72 @@
         <main class="profile-view__main">
             <div class="main-module">
                 <h2 class="module__header">General data</h2>
-                <ul class="data-list">
-                    <li class="data-list__item">Firstname</li>
-                    <li class="data-list__item">Lastname</li>
-                    <li class="data-list__item">Surname</li>
-                    <li class="data-list__item">Gender</li>
-                </ul>
+                <div class="wraper-for-column">
+                    <!-- Блок с именем  -->
+                    <div class="left-column">
+                        <editContentComp 
+                        v-model="userData.fullname"
+                        :title="'Имя Фамилия'"
+                        :is-edit-mode="isEditMode"
+                        :placeholder="'Введите имя и фамилию'"
+                        />
+                        <!-- Блок с e-mail -->
+                        <editContentComp
+                        v-model="userData.email"
+                        :title="'E-mail'"
+                        :is-edit-mode="isEditMode"
+                        :placeholder="'Введите e-mail'"
+                        />    
+                    </div>
+                    <!-- Блок с полом  -->
+                    <div class="right-column">
+                       <h2 v-if="!isEditMode" class="gender-content">{{ userData.gender.label }}</h2> 
+                       <h4 class="gender-title">Пол</h4>
+                       <radioInput
+                       v-if="isEditMode"
+                       v-model="userData.gender.value"
+                       :options="options"
+                       />
+                    </div>
+                </div>
+                
+                <button class="edit-btn" @click="changeData">{{ textBtn }}</button>
             </div>
         </main>
     </div>
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, reactive } from 'vue';
 import SvgIcon from '@jamescoyle/vue-icon';
 import { mdiTrayArrowUp, mdiWindowClose } from '@mdi/js';
+import editContentComp from '@/components/UI/editContentComp.vue';
+import radioInput from '@/components/UI/radioInput.vue';
 
 const srcImg = ref(null);
-
-
+const isEditMode = ref(false);
+const userData = reactive({
+    firstname: 'Irina',
+    lastname: 'Kanisheva',
+    fullname: 'Irina Kanisheva',
+    surname: 'Vladimirovna',
+    email: 'kanishevairina@mail.ru',
+    gender: { id: 'female', label: 'Женщина', value: 'female' },
+})
+const options = reactive([
+    { id: 'male', label: 'Мужчина', value: 'male' },
+    { id: 'female', label: 'Женщина', value: 'female' }
+])
+const textBtn = ref('Изменить')
+function changeData() {
+    if(isEditMode.value === false) { 
+        isEditMode.value = true;
+        textBtn.value = 'Сохранить'
+    } else if(isEditMode.value === true) {
+        isEditMode.value = false;
+        textBtn.value = 'Изменить'
+    }
+}
 function readImage(file) {
     const reader = new FileReader();
     reader.readAsDataURL(file);
@@ -206,6 +253,10 @@ function uploadAvatar() {
 .main-module {
     width: 100%;
     height: max-content;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
 }
 .module__header {
     width: max-content;
@@ -213,8 +264,49 @@ function uploadAvatar() {
     font-family: monospace;
     border-bottom: 2px solid rgba(0,0,0,.2);
 }
-
-.data-list {
-
+.wraper-for-column {
+    width: 100%;
+    display: flex;
+    padding-top: 1rem;
+    gap: 2rem;
+}
+.left-column {
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+.gender-container {
+    width: 50%;
+}
+.gender-title {
+    font-size: 1rem;
+    font-family: monospace;
+    color: grey;
+}
+.gender-content {
+    font-size: 1.5rem;
+    font-family: monospace;
+    color: black;
+}
+.edit-btn {
+    width: 30%;
+    cursor: pointer;
+    margin: 1rem 0;
+    padding: 0.3rem 1rem;
+    font-size: 1rem;
+    font-family: monospace;
+    color: var(--btn-fg);
+    background-color: var(--btn-bg);
+    border: var(--btn-border-color);
+    box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
+    border-radius: 8px;
+    text-align: center;
+    transition: all 0.4 ease;
+}
+.edit-btn:hover {
+    background-color: rgba(204, 172, 211, 0.759);
+    transition: all 0.4 ease;
+    border-color: var(--ui-focus-color);
 }
 </style>
