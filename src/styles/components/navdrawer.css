@@ -1,18 +1,10 @@
 /* NavDrawer */
 :root {
-    --nav-bg: #6c28d91e;
+    --nav-bg: #ffffff1e;
     --nav-bg-light-main: white;
     --nav-fg: black;
-    --nav-width: 70px;
+    --nav-width: 20%;
     --nav-color-copyright: gray;
     --nav-drawer-bg: white;
 }
 
-.ci-navdrawer {
-    background-color: var(--nav-bg);
-    width: var(--nav-width);
-}
-
-.ci-navdrawer__header {
-    font-family: var(--font);
-}

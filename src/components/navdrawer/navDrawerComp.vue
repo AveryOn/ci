@@ -5,7 +5,17 @@
     class="ci-navdrawer flex justify-content-center align-items-start h-full py-3"
     @mouseenter="openNav"
     >
-        <Drawer
+        <nav class="navdrawer-panel" :class="computeVisibleClass">
+            <div class="flex align-items-center justify-content-between px-3">
+                <h1>CI</h1>
+                <div class="flex gap-2">
+                    <!-- BTN CLOSE -->
+                    <Button icon="pi pi-window-minimize" text severity="secondary"/>
+                    <Button class="shadow-2" icon="pi pi-times" rounded/>
+                </div>
+            </div>
+        </nav>
+        <!-- <Drawer
         v-model:visible="visible" 
         header="CI"
         :modal="false"
@@ -36,13 +46,12 @@
                     (c) Command Interface Inc.
                 </p>
             </template>
-        </Drawer>
-        <i class="pi pi-bars text-xl"></i>
+        </Drawer> -->
     </div>
 </template>
 
 <script setup>
-import { ref, watch } from 'vue';
+import { ref, watch, computed } from 'vue';
 import { useMainStore } from '@/stores/main';
 import { useRouter } from 'vue-router';
 import gsap from 'gsap';
@@ -52,6 +61,7 @@ const router = useRouter();
 
 /* ====================================  DATA  ================================== */
 const visible = ref(false);
+const menuMode = ref('expand'); // expand | collapse
 const expandedKeys = ref({});
 const isShowCollapseBtn = ref(false);
 const items = ref([
@@ -69,6 +79,10 @@ const items = ref([
     ]},
 ]);
 
+// ==============================================   COMPUTED  =========================================
+const computeVisibleClass = computed(() => {
+    return menuMode.value
+});
 // ==============================================   METHODS  =========================================
 
 function followStatistics() {
@@ -118,8 +132,10 @@ function collapseAll() {
 };
 
 function openNav() {
-    gsap.to('#navdrawer', { duration: 0.15, left: '-10rem' })
-        .then(() => visible.value = true);
+    console.log('VISIBLE');
+    
+    // gsap.to('#navdrawer', { duration: 0.15, left: '-10rem' })
+    //     .then(() => visible.value = true);
 }
 function closeNav() {
     gsap.to('#navdrawer', { duration: 0.1, left: '0rem', delay: .35 })
@@ -138,11 +154,6 @@ watch(expandedKeys, (newValue) => {
     if(isFinded === false) return isShowCollapseBtn.value = false;
 });
 
-watch(visible, (newValue) => {
-    if(newValue === false) {
-        closeNav();
-    }
-});
 </script>
 
 <style scoped>
@@ -150,4 +161,27 @@ watch(visible, (newValue) => {
     position: relative;
     left: 0;
 }
+.ci-navdrawer {
+    position: relative;
+    background-color: var(--nav-bg);
+    width: var(--nav-width);
+}
+
+.ci-navdrawer__header {
+    font-family: var(--font);
+}
+.navdrawer-panel.expand {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border: 1px solid red;
+}
+.navdrawer-panel.collapse {
+    left: 0;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    border: 1px solid red;
+}
+
  </style>
