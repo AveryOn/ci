@@ -2,7 +2,6 @@
     <div class="app ci-block card flex justify-center">
         <navDrawerComp />
         <router-view></router-view>
-        
     </div>
 
 </template>
