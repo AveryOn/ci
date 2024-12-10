@@ -1,10 +1,11 @@
 /* NavDrawer */
 :root {
     --nav-bg: #ffffff1e;
-    --nav-bg-light-main: white;
+    --nav-bg-main: white;
     --nav-fg: black;
     --nav-width: 20%;
     --nav-color-copyright: gray;
     --nav-drawer-bg: white;
+    --nav-bg-collapse-main: rgb(34, 34, 34);
 }
 

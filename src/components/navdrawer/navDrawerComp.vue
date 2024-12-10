@@ -2,75 +2,38 @@
     <div  
     v-if="mainStore.isShowNavdrawer"
     id="navdrawer"
-    class="ci-navdrawer flex justify-content-center align-items-start h-full py-3"
+    class="ci-navdrawer flex justify-content-center align-items-center h-full py-3"
+    :class="computeVisibleClass"
     @mouseenter="openNav"
     >
+        <i 
+        v-if="menuMode === 'collapse'" 
+        class="pi pi-ellipsis-v my-auto absolute" 
+        style="font-size: 1.5rem; color: var(--nav-bg-main) !important;"
+        ></i>
         <nav class="navdrawer-panel" :class="computeVisibleClass">
             <div class="flex align-items-center justify-content-between px-2">
-                <h1>CI</h1>
-                <div class="flex gap-2">
-                    <!-- BTN CLOSE -->
-                    <Button 
-                    v-if="visible"
-                    icon="pi pi-window-minimize" 
-                    text 
-                    severity="secondary"
-                    size="small"
-                    />
-                    <Button 
-                    class="shadow-2" 
-                    v-if="visible"
-                    @click="closeNav"
-                    icon="pi pi-times" 
-                    text
-                    rounded
-                    severity="secondary"
-                    size="small"
-                    />
-                </div>
+                <h1 class="text-5xl">CI</h1>
+                <Button 
+                class="shadow-2" 
+                icon="pi pi-times" 
+                text
+                rounded
+                severity="secondary"
+                size="small"
+                @click="toggleMode"
+                />
             </div>
-            <div v-if="visible">
+            <div>
                 <PanelMenu :model="items" multiple v-model:expandedKeys="expandedKeys">
                 </PanelMenu>
             </div>
         </nav>
-        <!-- <Drawer
-        v-model:visible="visible" 
-        header="CI"
-        :modal="false"
-        aria-expanded="true"
-        >
-            <template #header>
-                <h1 class="ci-navdrawer__header text-6xl m-0">CI</h1>
-            </template>
-
-            <template #default>
-                <div class="relative" style="font-family: var(--font);">
-                    <PanelMenu :model="items" multiple v-model:expandedKeys="expandedKeys">
-                    </PanelMenu>
-                    <btn-comp 
-                    class="absolute right-0" 
-                    style="bottom: -40px; z-index: 99999;" 
-                    :show="isShowCollapseBtn" 
-                    :icon="'pi pi-minus'" 
-                    @click="collapseAll"
-                    ></btn-comp>
-                </div>
-            </template>
-            <template #footer>
-                <p 
-                class="font-italic" 
-                style="font-family: monospace; color: var(--nav-color-copyright);"
-                >
-                    (c) Command Interface Inc.
-                </p>
-            </template>
-        </Drawer> -->
     </div>
 </template>
 
 <script setup>
-import { ref, watch, computed } from 'vue';
+import { ref, watch, computed, onMounted } from 'vue';
 import { useMainStore } from '@/stores/main';
 import { useRouter } from 'vue-router';
 
@@ -79,7 +42,7 @@ const router = useRouter();
 
 /* ====================================  DATA  ================================== */
 const visible = ref(false);
-const menuMode = ref('collapse'); // expand | collapse
+const menuMode = ref('expand'); // expand | collapse
 const expandedKeys = ref({});
 const isShowCollapseBtn = ref(false);
 const navPanelClass = ref('collapse');
@@ -100,9 +63,28 @@ const items = ref([
 
 // ==============================================   COMPUTED  =========================================
 const computeVisibleClass = computed(() => {
-    return menuMode.value
+    return {
+        expand: menuMode.value === 'expand',
+        collapse: menuMode.value === 'collapse',
+    }
 });
 // ==============================================   METHODS  =========================================
+function openNav() {
+    if(menuMode.value === 'collapse') {
+        toggleMode();
+    }
+}
+
+function toggleMode() {
+    if(menuMode.value === 'collapse') {
+        menuMode.value = 'expand';
+        return void localStorage.setItem('mode_navdrawer', menuMode.value);
+    }
+    if (menuMode.value === 'expand') {
+        menuMode.value = 'collapse';
+        return void localStorage.setItem('mode_navdrawer', menuMode.value);
+    }
+}
 
 function followStatistics() {
     router.push({ name: 'statistics' });
@@ -150,22 +132,11 @@ function collapseAll() {
     isShowCollapseBtn.value = false;
 };
 
-function openNav(event) {
-    if(menuMode.value === 'collapse') {
-        menuMode.value = 'expand';
-        visible.value = true;
-    } else if(menuMode.value === 'expand') {
-        event.stopPropagation();
-        return
+function initMode() {
+    const mode = localStorage.getItem('mode_navdrawer');
+    if(mode) {
+        menuMode.value = mode;
     }
-    console.log(menuMode.value, visible.value)
-}
-function closeNav() {
-    if(menuMode.value === 'expand') {
-        menuMode.value = 'collapse'
-        visible.value = false;
-    }
-    console.log(menuMode.value, visible.value)
 }
 
 // =====================================   WATCH   ========================================
@@ -180,7 +151,9 @@ watch(expandedKeys, (newValue) => {
     });
     if(isFinded === false) return isShowCollapseBtn.value = false;
 });
-
+onMounted(() => {
+    initMode();
+});
 </script>
 
 <style scoped>
@@ -192,26 +165,36 @@ watch(expandedKeys, (newValue) => {
     position: relative;
     background-color: var(--nav-bg);
     width: var(--nav-width);
+    transition: all .4s ease;
+    overflow: hidden;
+}
+.ci-navdrawer.expand {
+    --nav-width: 20%;
+    background-color: var(--nav-bg-main);
 }
 
+.ci-navdrawer.collapse {
+    --nav-width: 10px;
+    background-color: var(--nav-bg-collapse-main);
+}
 .ci-navdrawer__header {
     font-family: var(--font);
 }
-.navdrawer-panel.expand {
+.navdrawer-panel{
     position: relative;
     display: flex;
     flex-direction: column;
     gap: 1rem;
     width: 100%;
     height: 100%;
-    border: 1px solid red;
+    transition: all 0.2s ease;
+    padding: 0 .6rem;
+}
+.navdrawer-panel.expand {
+    opacity: 1;
+
 }
 .navdrawer-panel.collapse {
-    left: 0;
-    width: 20%;
-    height: 100%;
-    position: absolute;
-    border: 1px solid red;
+    opacity: 0;
 }
-
  </style>
