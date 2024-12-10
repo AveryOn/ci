@@ -70,7 +70,7 @@
                     </div>
                 </div>
                 
-                <button class="edit-btn" @click="changeData">{{ textBtn }}</button>
+                <btnComp @click="changeData">{{ textBtn }}</btnComp>
             </div>
         </main>
     </div>
@@ -282,31 +282,12 @@ function uploadAvatar() {
 .gender-title {
     font-size: 1rem;
     font-family: monospace;
-    color: grey;
+    color: var(--title-fg);
 }
 .gender-content {
     font-size: 1.5rem;
     font-family: monospace;
-    color: black;
+    color: var(--content-fg);
 }
-.edit-btn {
-    width: 30%;
-    cursor: pointer;
-    margin: 1rem 0;
-    padding: 0.3rem 1rem;
-    font-size: 1rem;
-    font-family: monospace;
-    color: var(--btn-fg);
-    background-color: var(--btn-bg);
-    border: var(--btn-border-color);
-    box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
-    border-radius: 8px;
-    text-align: center;
-    transition: all 0.4 ease;
-}
-.edit-btn:hover {
-    background-color: rgba(204, 172, 211, 0.759);
-    transition: all 0.4 ease;
-    border-color: var(--ui-focus-color);
-}
+
 </style>

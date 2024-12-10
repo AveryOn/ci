@@ -55,12 +55,12 @@ function updateValue(event) {
     .content {
         font-size: 1.5rem;
         font-family: monospace;
-        color: black;
+        color: var(--content-fg);
     }
     .title {
         font-size: 1rem;
         font-family: monospace;
-        color: grey;
+        color: var(--title-fg);
     }
     .input-container {
         width: 100%;
@@ -73,7 +73,7 @@ function updateValue(event) {
         font-family: monospace;
         color: black;
         color: #333;
-        border: 2px solid #ddd;
+        border: none;
         border-radius: 8px;
         background-color: #fff;
         transition: border-color 0.3s, box-shadow 0.3s;
@@ -81,6 +81,6 @@ function updateValue(event) {
     .input:focus {
         outline: none;
         border-color: var(--ui-focus-color);
-        box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
+        box-shadow: var(--shadow-focus);
     }
 </style>
