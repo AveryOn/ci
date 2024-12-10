@@ -6,13 +6,32 @@
     @mouseenter="openNav"
     >
         <nav class="navdrawer-panel" :class="computeVisibleClass">
-            <div class="flex align-items-center justify-content-between px-3">
+            <div class="flex align-items-center justify-content-between px-2">
                 <h1>CI</h1>
                 <div class="flex gap-2">
                     <!-- BTN CLOSE -->
-                    <Button icon="pi pi-window-minimize" text severity="secondary"/>
-                    <Button class="shadow-2" icon="pi pi-times" rounded/>
+                    <Button 
+                    v-if="visible"
+                    icon="pi pi-window-minimize" 
+                    text 
+                    severity="secondary"
+                    size="small"
+                    />
+                    <Button 
+                    class="shadow-2" 
+                    v-if="visible"
+                    @click="closeNav"
+                    icon="pi pi-times" 
+                    text
+                    rounded
+                    severity="secondary"
+                    size="small"
+                    />
                 </div>
+            </div>
+            <div v-if="visible">
+                <PanelMenu :model="items" multiple v-model:expandedKeys="expandedKeys">
+                </PanelMenu>
             </div>
         </nav>
         <!-- <Drawer
@@ -54,16 +73,16 @@
 import { ref, watch, computed } from 'vue';
 import { useMainStore } from '@/stores/main';
 import { useRouter } from 'vue-router';
-import gsap from 'gsap';
 
 const mainStore = useMainStore();
 const router = useRouter();
 
 /* ====================================  DATA  ================================== */
 const visible = ref(false);
-const menuMode = ref('expand'); // expand | collapse
+const menuMode = ref('collapse'); // expand | collapse
 const expandedKeys = ref({});
 const isShowCollapseBtn = ref(false);
+const navPanelClass = ref('collapse');
 const items = ref([
     { key: null, label: 'Statistics', icon: 'pi pi-chart-bar', command: followStatistics },
     { key: null, label: 'Profile', icon: 'pi pi-user', command: followProfile },
@@ -131,14 +150,22 @@ function collapseAll() {
     isShowCollapseBtn.value = false;
 };
 
-function openNav() {
-    console.log('VISIBLE');
-    
-    // gsap.to('#navdrawer', { duration: 0.15, left: '-10rem' })
-    //     .then(() => visible.value = true);
+function openNav(event) {
+    if(menuMode.value === 'collapse') {
+        menuMode.value = 'expand';
+        visible.value = true;
+    } else if(menuMode.value === 'expand') {
+        event.stopPropagation();
+        return
+    }
+    console.log(menuMode.value, visible.value)
 }
 function closeNav() {
-    gsap.to('#navdrawer', { duration: 0.1, left: '0rem', delay: .35 })
+    if(menuMode.value === 'expand') {
+        menuMode.value = 'collapse'
+        visible.value = false;
+    }
+    console.log(menuMode.value, visible.value)
 }
 
 // =====================================   WATCH   ========================================
@@ -172,13 +199,16 @@ watch(expandedKeys, (newValue) => {
 }
 .navdrawer-panel.expand {
     position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
     width: 100%;
     height: 100%;
     border: 1px solid red;
 }
 .navdrawer-panel.collapse {
     left: 0;
-    width: 100%;
+    width: 20%;
     height: 100%;
     position: absolute;
     border: 1px solid red;

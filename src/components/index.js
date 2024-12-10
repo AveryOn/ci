@@ -34,6 +34,7 @@ import Dialog from 'primevue/dialog';
 import Splitter from 'primevue/splitter';
 import SplitterPanel from 'primevue/splitterpanel';
 import ProgressSpinner from 'primevue/progressspinner';
+import RadioButton from 'primevue/radiobutton';
 
 
 export default [
@@ -73,4 +74,5 @@ export default [
     Splitter,
     SplitterPanel,
     ProgressSpinner,
+    RadioButton,
 ]
