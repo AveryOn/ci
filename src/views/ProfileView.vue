@@ -80,7 +80,7 @@
 import { ref, reactive } from 'vue';
 import SvgIcon from '@jamescoyle/vue-icon';
 import { mdiTrayArrowUp, mdiWindowClose } from '@mdi/js';
-import editContentComp from '@/components/UI/editContentComp.vue';
+import editContentComp from '@/components/UI/profileChunkComp.vue';
 import radioInput from '@/components/UI/radioInput.vue';
 
 const srcImg = ref(null);

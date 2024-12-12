@@ -1,0 +1,5 @@
+:root {
+    --auth-form-bg: rgb(216, 214, 214);
+
+    --auth-form-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}

@@ -16,6 +16,7 @@
 @import url(./toolbar.css);
 @import url(./selectInput.css);
 @import url(./tableTree.css);
+@import url(./auth.css);
 
 /* Стили которые могут применятся ко всем компонентам */
 :root {

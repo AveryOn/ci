@@ -46,7 +46,6 @@ router.beforeEach((to, from, next) => {
     const store = useMainStore();
     if(to.name === 'auth') {
         store.isShowNavdrawer = false;
-        console.log(store.isShowNavdrawer);
     }
     next();
 });
