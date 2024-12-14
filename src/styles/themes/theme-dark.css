@@ -13,7 +13,6 @@
     --border-color-view: #8888883b !important;
     --scrollbar-thumb-color: #707070 !important;
 
-
     --table-bg: #18181b !important;
     --table-fg: rgb(230, 230, 230) !important;
     --table-cell-bg-active: rgb(128, 126, 126) !important;
@@ -29,12 +28,21 @@
     --ui-bg: #18181b !important;
     --ui-border-color: #3f3f46 !important;
 
+
     /* Btn */
     --btn-bg: #28282c !important;
     --btn-fg: white !important;
     --btn-border-color: #3f3f46 !important;
     --btn-success-color: #18181b !important;
     transition: all var(--duration-color) ease !important;
+
+    /* Navdrawer */
+    --nav-bg: #ffffff1e !important;
+    --nav-bg-main: #212529 !important;
+    --navdrawer-logo-fg: rgb(231, 231, 231) !important;
+
+    /* Auth */
+    --auth-form-bg: #343a40 !important;
 
     /* Button PrimeVue */
     --p-button-primary-background: var(--btn-bg) !important;
@@ -73,4 +81,7 @@
     --p-checkbox-checked-focus-border-color: var(--ui-focus-color) !important;
     --p-checkbox-icon-color: var(--p-zinc-700) !important;
     --p-checkbox-icon-checked-hover-color: var(--p-zinc-50) !important;
+
+    /* Radio Button */
+    --radio-bg: var(--background-color) !important;
 }

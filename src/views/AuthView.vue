@@ -29,7 +29,7 @@
             </Form>
         </div>
     </div>
-</template>]
+</template>
 
 <script setup>
 import { Form, Field, ErrorMessage } from 'vee-validate';
