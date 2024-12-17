@@ -13,83 +13,14 @@
         :settings="tableSettings"
         ></tableSettingDrawer>
 
-        <DataTable
-        :selectionMode="'single'"
-        v-model:selection="projectOpenning"
-        dataKey="id"
-        @row-select="(event) => handlerOpenProject(event.data.id)"
-        :value="projects" 
-        :size="tableSettings.sizeTable"
-        :showGridlines="tableSettings.showGridLines"
-        :stripedRows="tableSettings.stripedRows"
-        :paginator="tableSettings.paginator"
-        :rows="4"
-        :rowsPerPageOptions="[2,4,5]"
-        removableSort
-        :loading="loadingData"
-        scrollable
-        scrollHeight="81vh"
-        tableStyle="width: 100%"
-        columnResizeMode="fit"
-        >
-            <template #header>
-                <div class="flex flex-wrap items-center justify-between gap-2">
-                    <!-- Back page -->
-                    <Button 
-                    class="ci-btn mr-2"
-                    icon="pi pi-angle-left" 
-                    rounded 
-                    raised 
-                    @click="router.go(-1)"
-                    title="go to back" />
-                    <h1 class="ci-text text-2xl mr-auto font-normal align-self-center">Projects</h1>
-
-                    <!-- New Project -->
-                    <Button 
-                    class="ci-btn ml-auto" 
-                    icon="pi pi-plus" 
-                    rounded 
-                    @click="router.push({ name: 'new-project' })"
-                    raised 
-                    title="create new project" />
-
-                    <!-- Settings -->
-                    <Button 
-                    class="ci-btn"
-                    icon="pi pi-cog" 
-                    rounded 
-                    @click="isShowSettingDrawer = true"
-                    raised 
-                    title="settings"/>
-
-                    <!-- Update Table -->
-                    <Button 
-                    class="ci-btn"
-                    icon="pi pi-refresh" 
-                    rounded 
-                    raised 
-                    title="reload list"/>
-                </div>
-            </template>
-
-            <Column field="id" header="ID" sortable></Column>
-            <Column field="name" header="Name"></Column>
-            <Column field="host" header="Host"></Column>
-            <Column field="port" header="Port"></Column>
-            <Column field="handshakeHash" header="Handshake Hash"></Column>
-            <Column field="createdAt" header="Created at">
-                <template #body="{data}">
-                    <p :title="`${dateFromNow(data.createdAt)}`">{{ formatedDateTimeTemplate(data.createdAt, tableSettings.selectDateTemplate) }}</p>
-                </template>
-            </Column>
-            <Column field="updatedAt" header="Updated at">
-                <template #body="{data}">
-                    <p :title="`${dateFromNow(data.updatedAt)}`">{{ formatedDateTimeTemplate(data.updatedAt, tableSettings.selectDateTemplate) }}</p>
-                </template>
-            </Column>
- 
-            <template #footer> In total there are <strong>{{ projects?.length }}</strong> projects. </template>
-        </DataTable>
+        <!-- Table -->
+        <tableComp 
+        v-model="projectOpenning"
+        :items="projects"
+        :loading-data="loadingData"
+        :table-title="'Projects'"
+        :template-table="templateTable"
+        ></tableComp>
     </div>
 </template>
 
@@ -97,14 +28,18 @@
 import tableSettingDrawer from '@/components/UI/tableSettingDrawer.vue';
 import { onMounted, ref } from 'vue';
 import ProjectService from '@/services/projectService';
-import { formatedDateTimeTemplate, dateFromNow } from '@/utils/maskUtils';
+import tableComp from '@/components/UI/tableComp.vue';
 import { useToast } from 'primevue/usetoast';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
 const toast = useToast();
 
-const projects = ref();
+const projects = ref([
+    { id: 1, username: 'alex777', name: 'Alex', createdAt: '2024-06-03T18:14:08.339+00:00' },
+    { id: 2, username: 'bob777', name: 'Bob', createdAt: '2021-07-03T18:14:08.339+00:00' },
+    { id: 3, username: 'tom777', name: 'Tom', createdAt: '2023-03-03T18:14:08.339+00:00' },
+]);
 const projectOpenning = ref();
 const loadingData = ref(false);
 const isShowSettingDrawer = ref(false);
@@ -116,10 +51,15 @@ const tableSettings = ref({
     dateTemplates: ['HH:mm / DD-MM-YYYY', 'HH:mm | DD/MM/YY'],
     selectDateTemplate: 'HH:mm / DD-MM-YYYY',
 });
-
-function handlerOpenProject(projectId) {
-    router.push({ name: 'project', params: { id: projectId } });
-}
+const templateTable = [
+    { field: 'id', header: 'ID', sortable: true },
+    { field: 'name', header: 'Name' },
+    { field: 'host', header: 'Host' },
+    { field: 'port', header: 'Port' },
+    { field: 'handshakeHash', header: 'Handshake Hash' },
+    { field: 'createdAt', header: 'Created at', isDate: true },
+    { field: 'updatedAt', header: 'Updated at', isDate: true },
+]
 
 // Добавление пользовательского шаблона времени
 function addDateTemplate(template) {
@@ -173,7 +113,6 @@ onMounted(async () => {
     getTableSettings();
     try {
         loadingData.value = true;
-        // projects.value = await (await fetch('https://jsonplaceholder.typicode.com/posts?_limit=20')).json();
         projects.value = await ProjectService.getProjects();
     } catch (err) {
         console.log(err)
