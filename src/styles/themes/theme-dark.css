@@ -28,6 +28,12 @@
     --ui-bg: #18181b !important;
     --ui-border-color: #3f3f46 !important;
 
+    /* Profile */
+    --profile-bg: #343a40 !important;
+    --profile-box-shadow: 2px 2px 10px rgba(0,0,0,.4) !important;
+    /* Profile chunk input */
+    --content-fg: rgb(239, 239, 239) !important;
+    --title-fg: rgb(134, 134, 134) !important;
 
     /* Btn */
     --btn-bg: #28282c !important;
@@ -43,6 +49,7 @@
 
     /* Auth */
     --auth-form-bg: #343a40 !important;
+    --auth-form-border: 1px solid white !important;
 
     /* Button PrimeVue */
     --p-button-primary-background: var(--btn-bg) !important;
@@ -83,5 +90,7 @@
     --p-checkbox-icon-checked-hover-color: var(--p-zinc-50) !important;
 
     /* Radio Button */
-    --radio-bg: var(--background-color) !important;
+    --p-radiobutton-checked-border-color: rgb(29, 29, 29) !important;
+    --p-radiobutton-checked-hover-border-color: rgb(29, 29, 29) !important;
+    --p-radiobutton-checked-hover-background:  white !important;
 }

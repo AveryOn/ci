@@ -87,6 +87,7 @@ const handleSubmit = async (validate) => {
     padding: 2rem;
     background: var(--auth-form-bg);
     border-radius: 8px;
+    border: var(--auth-form-border);
     box-shadow: var(--auth-form-shadow);
 }
 .p-field {

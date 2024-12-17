@@ -151,8 +151,8 @@ function uploadAvatar() {
     align-items: center;
     justify-content: center;
     padding: 0.5rem 1rem;
-    background-color: #fff;
-    box-shadow: 2px 2px 10px rgba(0,0,0,.2);
+    background-color: var(--profile-bg);
+    box-shadow: var(--profile-box-shadow);
     border-radius: 10px;
 }
 @keyframes rotate-right {
@@ -245,8 +245,8 @@ function uploadAvatar() {
     justify-content: center;
     padding: 0.5rem 1rem;
     margin-top: 1rem;
-    background-color: #fff;
-    box-shadow: 2px 2px 10px rgba(0,0,0,.2);
+    background-color: var(--profile-bg);
+    box-shadow: var(--profile-box-shadow);
     border-radius: 10px;
     overflow: auto;
 }
