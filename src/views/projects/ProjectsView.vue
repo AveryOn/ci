@@ -1,4 +1,4 @@
-<template>
+ <template>
     <div class="ci-view ci-block w-full">
         <Toast />
         <tableSettingDrawer 

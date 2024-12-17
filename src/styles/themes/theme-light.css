@@ -50,4 +50,12 @@
     /* Custom Tokens */
     --block-bg: white !important;
     transition: all var(--duration-color) ease !important;
+
+    /* Profile */
+    --profile-box-shadow: 2px 2px 10px rgba(82, 82, 82, 0.3) !important;
+
+    /* Radio Button */
+    --p-radiobutton-checked-border-color: rgb(29, 29, 29) !important;
+    --p-radiobutton-checked-hover-border-color: rgb(29, 29, 29) !important;
+    --p-radiobutton-checked-hover-background:  white !important;
 }

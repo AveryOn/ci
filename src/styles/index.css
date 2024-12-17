@@ -37,10 +37,6 @@
     --thumb-radius: 3px;
     --scrollbar-width: 9px;
     --track-bg: rgb(231, 231, 231);
-    /* Input */
-    --content-fg: rgb(26, 25, 25);
-    --title-fg: rgb(98, 98, 98);
-    --shadow-focus: 0 0 5px rgb(102, 101, 101);
 }
 
 * {

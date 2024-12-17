@@ -2,6 +2,7 @@
 :root {
     --nav-bg: #ffffff1e;
     --nav-bg-main: white;
+    --navdrawer-logo-fg: black;
     --nav-fg: black;
     --nav-width: 20%;
     --nav-color-copyright: gray;

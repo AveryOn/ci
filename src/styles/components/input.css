@@ -25,6 +25,11 @@
     --p-textarea-border-color: var(--input-border-color) !important;
     --p-textarea-hover-border-color: var(--input-hover-border-color) !important;
     --p-textarea-focus-border-color: var(--input-focus-border-color) !important;
+
+    /* Profile chunk input */
+    --content-fg: rgb(26, 25, 25);
+    --title-fg: rgb(98, 98, 98);
+    --shadow-focus: 0 0 5px rgb(102, 101, 101);
 }
 
 .p-inputmask {

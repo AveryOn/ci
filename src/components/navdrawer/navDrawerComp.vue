@@ -13,7 +13,7 @@
         ></i>
         <nav class="navdrawer-panel" :class="computeVisibleClass">
             <div class="flex align-items-center justify-content-between px-2">
-                <h1 class="text-5xl">CI</h1>
+                <h1 class="text-5xl navdrawer-logo">CI</h1>
                 <Button 
                 class="shadow-2" 
                 icon="pi pi-times" 
@@ -179,6 +179,9 @@ onMounted(() => {
 }
 .ci-navdrawer__header {
     font-family: var(--font);
+}
+.navdrawer-logo {
+    color: var(--navdrawer-logo-fg);
 }
 .navdrawer-panel{
     position: relative;

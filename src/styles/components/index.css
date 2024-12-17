@@ -16,6 +16,8 @@
 @import url(./toolbar.css);
 @import url(./selectInput.css);
 @import url(./tableTree.css);
+@import url(./auth.css);
+@import url(./UI/radiobtn.css);
 
 /* Стили которые могут применятся ко всем компонентам */
 :root {
