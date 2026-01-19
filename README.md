@@ -1,29 +1,29 @@
-# .
+## Command Interface (CI)
 
-This template should help get you started developing with Vue 3 in Vite.
+### Description
+Frontend-only management panel for interacting with external systems via HTTP.
+Allows defining projects and their endpoints, configuring requests, and executing them from a unified UI.
 
-## Recommended IDE Setup
+### Scope
+- Project-based organization
+- HTTP endpoint configuration
+- Request constructor (method, path, headers, cookies)
+- Manual request execution
+- Response inspection
+- UI workflows for managing multiple endpoints
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+### Tech
+- Vue 3
+- Vite
+- Pinia
+- Vue Router
+- PrimeVue
+- PrimeFlex
+- GSAP
+- Quill
+- Highlight.js
 
-## Customize configuration
-
-See [Vite Configuration Reference](https://vitejs.dev/config/).
-
-## Project Setup
-
-```sh
-npm install
-```
-
-### Compile and Hot-Reload for Development
-
-```sh
-npm run dev
-```
-
-### Compile and Minify for Production
-
-```sh
-npm run build
-```
+### Notes
+- Focus on UI mechanics and configurability
+- Generic HTTP control panel, domain-agnostic
+- Intended as a reusable admin interface
